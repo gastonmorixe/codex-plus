@@ -1,0 +1,72 @@
+name: codex-book (GitHub Pages)
+
+on:
+  push:
+    branches: [main, "gaston/codex-book"]
+    paths:
+      - docs/codex-book/**
+      - .github/workflows/codex-book-pages.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - docs/codex-book/**
+      - .github/workflows/codex-book-pages.yml
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # NOTE: Don't name this `MDBOOK_VERSION` — mdBook treats `MDBOOK_*` env vars as
+  # config overrides, which breaks `mdbook build` with "invalid key `version`".
+  CODEX_BOOK_MDBOOK_VERSION: 0.5.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - uses: dtolnay/rust-toolchain@1.90
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ~/.cargo/bin
+          key: mdbook-cargo-${{ runner.os }}-${{ env.CODEX_BOOK_MDBOOK_VERSION }}
+
+      - name: Install mdbook
+        run: |
+          set -euo pipefail
+          cargo install mdbook --version "${CODEX_BOOK_MDBOOK_VERSION}" --locked
+
+      - name: Build book
+        run: mdbook build docs/codex-book
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/codex-book/book
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

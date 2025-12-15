@@ -12,6 +12,7 @@ dist/
 build/
 out/
 storybook-static/
+docs/codex-book/book/
 
 # ignore README for publishing
 codex-cli/README.md
