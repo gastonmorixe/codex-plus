@@ -2,7 +2,7 @@ name: codex-book (GitHub Pages)
 
 on:
   push:
-    branches: [main]
+    branches: [main, "gaston/codex-book"]
     paths:
       - docs/codex-book/**
       - .github/workflows/codex-book-pages.yml
@@ -14,7 +14,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -55,6 +55,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
