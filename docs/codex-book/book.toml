@@ -1,0 +1,13 @@
+[book]
+title = "Codex Book"
+authors = ["Codex CLI contributors"]
+language = "en"
+src = "."
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "openai-dark"
+no-section-label = true
+# Minimalistic: keep UI, drop extra chrome
+# (Search is still available by default; can be disabled if desired.)
+additional-css = ["theme/custom.css"]

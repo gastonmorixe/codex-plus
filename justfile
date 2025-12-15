@@ -51,3 +51,17 @@ test:
 # Run the MCP server
 mcp-server-run *args:
     cargo run -p codex-mcp-server -- "$@"
+
+# ---- docs/codex-book (mdBook) -------------------------------------------------
+
+# Install pinned mdBook tooling (matches CI)
+book-install:
+    cargo install mdbook --version 0.5.0 --locked --force
+
+# Serve the Codex Book locally at http://localhost:3000
+book-serve *args:
+    mdbook serve ../docs/codex-book "$@"
+
+# Build the Codex Book to docs/codex-book/book/
+book-build:
+    mdbook build ../docs/codex-book

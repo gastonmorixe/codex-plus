@@ -1,0 +1,195 @@
+/* Minimalistic mdBook styling: tight, readable, low-chrome. */
+
+:root {
+  /* Narrower reading column. */
+  --content-max-width: 900px;
+}
+
+/* Custom monochrome theme (pitch black, grayscale UI). */
+.openai-dark {
+  --bg: #000000;
+  --fg: #e6e6e6;
+
+  --sidebar-bg: #000000;
+  --sidebar-fg: #d8d8d8;
+  --sidebar-non-existant: #6a6a6a;
+  --sidebar-active: #ffffff;
+  --sidebar-spacer: #161616;
+
+  --scrollbar: rgba(230, 230, 230, 0.35);
+  --scrollbar-hover: rgba(230, 230, 230, 0.55);
+
+  --icons: #9a9a9a;
+  --icons-hover: #ffffff;
+
+  --links: #e6e6e6;
+  --inline-code-color: #e6e6e6;
+
+  --theme-popup-bg: #0b0b0b;
+  --theme-popup-border: #2a2a2a;
+  --theme-hover: #111111;
+
+  --quote-bg: #0b0b0b;
+  --quote-border: #262626;
+
+  --warning-border: #7a7a7a;
+
+  --table-border-color: #1a1a1a;
+  --table-header-bg: #101010;
+  --table-alternate-bg: #060606;
+
+  --searchbar-border-color: #2a2a2a;
+  --searchbar-bg: #101010;
+  --searchbar-fg: #e6e6e6;
+  --searchbar-shadow-color: rgba(0, 0, 0, 0.0);
+  --searchresults-header-fg: #a8a8a8;
+  --searchresults-border-color: #2a2a2a;
+  --searchresults-li-bg: #0b0b0b;
+  --search-mark-bg: #2a2a2a;
+
+  --footnote-highlight: #bdbdbd;
+  --overlay-bg: rgba(255, 255, 255, 0.06);
+
+  --blockquote-note-color: #d0d0d0;
+  --blockquote-tip-color: #d0d0d0;
+  --blockquote-important-color: #d0d0d0;
+  --blockquote-warning-color: #d0d0d0;
+  --blockquote-caution-color: #d0d0d0;
+
+  --sidebar-header-border-color: #2a2a2a;
+
+  --color-scheme: dark;
+
+  /* Make copy icons visible on dark. */
+  --copy-button-filter: invert(85%);
+  --copy-button-filter-hover: invert(100%);
+}
+
+.openai-dark body {
+  /* Text smoothing (macOS + general). */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Reduce visual noise. */
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+/* Code blocks: slightly tighter. */
+pre {
+  border-radius: 8px;
+}
+
+/* Inline code: keep readable and theme-neutral (avoid ayu's yellow). */
+.content :not(pre) > code {
+  color: inherit;
+  background: rgba(127, 127, 127, 0.14);
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  padding: 0.08em 0.25em;
+  border-radius: 6px;
+}
+
+/* Keep the inline-code chip subtle on pitch black. */
+.openai-dark .content :not(pre) > code {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* openai-dark: highlight.js palette (monochrome, dark). */
+.openai-dark pre > code {
+  color: #e6e6e6;
+  background: #0b0b0b;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.openai-dark pre > code.hljs {
+  /* Override highlight.css (light theme). */
+  color: #e6e6e6;
+  background: #0b0b0b;
+}
+
+/* Inline highlighted code: subtle chip. */
+.openai-dark :not(pre) > .hljs {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.openai-dark :not(pre):not(a) > .hljs {
+  color: inherit;
+}
+
+.openai-dark .hljs-comment,
+.openai-dark .hljs-quote {
+  color: #8a8a8a;
+}
+
+.openai-dark .hljs-keyword,
+.openai-dark .hljs-selector-tag,
+.openai-dark .hljs-symbol {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.openai-dark .hljs-title,
+.openai-dark .hljs-built_in,
+.openai-dark .hljs-section {
+  color: #f2f2f2;
+  font-weight: 600;
+}
+
+.openai-dark .hljs-string,
+.openai-dark .hljs-bullet {
+  color: #d6d6d6;
+}
+
+.openai-dark .hljs-number,
+.openai-dark .hljs-meta,
+.openai-dark .hljs-builtin-name,
+.openai-dark .hljs-literal,
+.openai-dark .hljs-type,
+.openai-dark .hljs-params {
+  color: #c7c7c7;
+}
+
+.openai-dark .hljs-variable,
+.openai-dark .hljs-template-variable,
+.openai-dark .hljs-attribute,
+.openai-dark .hljs-attr,
+.openai-dark .hljs-regexp,
+.openai-dark .hljs-link,
+.openai-dark .hljs-selector-id,
+.openai-dark .hljs-selector-class,
+.openai-dark .hljs-tag,
+.openai-dark .hljs-name {
+  color: #eeeeee;
+}
+
+.openai-dark .hljs-addition {
+  color: #e6e6e6;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.openai-dark .hljs-deletion {
+  color: #e6e6e6;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Sidebar: subtle separators. */
+.sidebar {
+  border-right: 1px solid rgba(127, 127, 127, 0.18);
+}
+
+/* Make the top bar less tall. */
+.menu-bar {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Mermaid: removed (we use ASCII diagrams now). */
