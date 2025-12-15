@@ -6,6 +6,11 @@ on:
     paths:
       - docs/codex-book/**
       - .github/workflows/codex-book-pages.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - docs/codex-book/**
+      - .github/workflows/codex-book-pages.yml
   workflow_dispatch: {}
 
 permissions:
@@ -18,7 +23,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MDBOOK_VERSION: 0.5.0
+  # NOTE: Don't name this `MDBOOK_VERSION` — mdBook treats `MDBOOK_*` env vars as
+  # config overrides, which breaks `mdbook build` with "invalid key `version`".
+  CODEX_BOOK_MDBOOK_VERSION: 0.5.0
 
 jobs:
   build:
@@ -38,12 +45,12 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             ~/.cargo/bin
-          key: mdbook-cargo-${{ runner.os }}-${{ env.MDBOOK_VERSION }}
+          key: mdbook-cargo-${{ runner.os }}-${{ env.CODEX_BOOK_MDBOOK_VERSION }}
 
       - name: Install mdbook
         run: |
           set -euo pipefail
-          cargo install mdbook --version "${MDBOOK_VERSION}" --locked
+          cargo install mdbook --version "${CODEX_BOOK_MDBOOK_VERSION}" --locked
 
       - name: Build book
         run: mdbook build docs/codex-book
